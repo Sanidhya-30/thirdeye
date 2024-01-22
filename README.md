@@ -1,4 +1,4 @@
-# thirdeye
+# Thirdeye
 Repository for upkeeping and documentation of code written during the period of internship at 3rdiTech.
 
 ## Key Topics
@@ -22,11 +22,11 @@ Repository for upkeeping and documentation of code written during the period of 
 * Bilateral filters
 * Morphological techniques
 
-#### References and documentation
-Documentatiion: reports and presentation 
+## References and documentation
+Reports and Presentations : 
 [link](https://drive.google.com/drive/folders/1THnX9U0wxn2NSS96b0KueOdvOWHBidi2?usp=drive_link "Google Drive")
 
-References: research papers and books
+Research papers and Literature :
 [link](https://github.com/Sanidhya-30/thirdeye/blob/main/references.txt "Github doc")
 
 ## Prerequisites
