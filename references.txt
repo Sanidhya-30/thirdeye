@@ -1,0 +1,45 @@
+====	DIGITAL ZOOM 	====
+
+
+1. https://chiranjivi.tripod.com/EDITut.html
+
+2. New Edge-Directed Interpolation
+Xin Li, Member, IEEE, and Michael T. Orchard, Fellow, IEEE
+
+3. https://mazzo.li/posts/lanczos.html
+
+4. https://www.cs.cornell.edu/courses/cs4670/2018sp/lec06-resampling.pdf
+
+5. https://doi.org/10.1016/j.imavis.2019.02.002
+
+6. https://doi.org/10.1109/CVPR.2004.1315043
+
+
+
+
+====    	AUTO-GAIN CONTROL           ==== 
+
+
+1. https://towardsdatascience.com/contrast-enhancement-of-grayscale-images-using-morphological-operators-de6d483545a1
+
+2. https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho1-03-img-histo-1-histograms.pptx.pdf
+
+3. https://doi.org/10.1186/s13640-016-0138-1
+
+4. https://doi.org/10.1016/j.ins.2019.05.015 ++ https://doi.org/10.1016/j.procs.2020.01.033
+
+6. https://doi.org/10.1109/icodse.2016.7936115
+
+7. https://doi.org/10.1109/ICOSP.2010.5655927
+
+8. https://doi.org/10.1016/j.ejrnm.2015.01.004
+
+9. https://doi.org/10.1109/ICISC.2018.8398874
+
+
+
+
+====		    MISC			====
+
+1. https://github.com/raoofnaushad/Fourier-Transformation-for-Image-Processing/blob/master/fourier_transform.py1
+2. https://github.com/tesfagabir/Digital-Image-Processing

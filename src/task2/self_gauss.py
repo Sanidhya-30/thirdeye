@@ -16,7 +16,7 @@ def gaussian_kernel(size, sigma=1.0):
 def apply_gaussian_smoothing(image, kernel_size=9, sigma=1.5):
     """
     Apply Gaussian smoothing to the image.
-
+    
     """
     kernel = gaussian_kernel(kernel_size, sigma)
     image_width, image_height = len(image[0]), len(image)

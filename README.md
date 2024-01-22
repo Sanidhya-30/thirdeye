@@ -22,8 +22,12 @@ Repository for upkeeping and documentation of code written during the period of 
 * Bilateral filters
 * Morphological techniques
 
-#### Google Drive
-[link]([https://www.google.com](https://drive.google.com/drive/folders/1THnX9U0wxn2NSS96b0KueOdvOWHBidi2?usp=sharing) "Drive Link")
+#### References and documentation
+Documentatiion: reports and presentation 
+[link](https://drive.google.com/drive/folders/1THnX9U0wxn2NSS96b0KueOdvOWHBidi2?usp=drive_link "Google Drive")
+
+References: research papers and books
+[link](https://github.com/Sanidhya-30/thirdeye/blob/main/references.txt "Github doc")
 
 ## Prerequisites
 * python 3.x
