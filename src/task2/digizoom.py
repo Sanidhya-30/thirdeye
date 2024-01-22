@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import pywt
+from ..utils import *
 
 # Normal methods
 def digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_NEAREST):
@@ -82,13 +83,7 @@ wavelet_zoomed = wavelet_zoom(image, zoom_factor)
 edge_directed_zoomed = edge_directed_zoom(image, zoom_factor)
 
 # Display the combined images
-cv2.imshow("OG Image", image)
-cv2.imshow("nearest interpolation", nearest_zoomed)
-cv2.imshow("Bilinear interpolation", bilinear_zoomed)
-cv2.imshow("Bicubuc interpolation", bicubic_zoomed)
-# cv2.imshow("Lancsoz resampling", lanczos_zoomed)
-cv2.imshow("wavelet method", wavelet_zoomed)
-cv2.imshow("edge directed Interpolation", edge_directed_zoomed)
+plot_images(image, nearest_zoomed, bilinear_zoomed, bicubic_zoomed, wavelet_zoomed, edge_directed_zoomed)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

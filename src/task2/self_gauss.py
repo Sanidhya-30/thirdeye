@@ -1,34 +1,8 @@
 from PIL import Image
 import time
 import cv2
-import matplotlib.pyplot as plt
+from ..utils import *
 
-#Define values for some constants
-pi = 3.14159265
-e = 2.71828
-
-## PLOT IMAGES
-def plot_images(*images):
-    """
-    Plot multiple images in a single figure.
-
-    """
-    num_images = len(images)
-    rows = 1
-    cols = num_images
-
-    # Create a new figure
-    fig, axes = plt.subplots(rows, cols, figsize=(4 * cols, 4))
-
-    # If only one image is provided, axes is a single Axes object, not an array
-    if num_images == 1:
-        axes = [axes]
-
-    for i, ax in enumerate(axes):
-        ax.imshow(images[i])
-        ax.axis('off')  # Turn off axis labels
-
-    plt.show()
 
 ##Generate a 2D Gaussian kernel.
 def gaussian_kernel(size, sigma=1.0):
@@ -36,25 +10,6 @@ def gaussian_kernel(size, sigma=1.0):
                for x in range(size)] for y in range(size)]
     normalization = sum(sum(row) for row in kernel)
     return [[value / normalization for value in row] for row in kernel]
-
-
-##  Convert RGB to Fray Pixel by pixel using (luma L = R * 299/1000 + G * 587/1000 + B * 114/1000)
-def rgb_to_gray_luma(image_path):
-    original_image = Image.open(image_path)   # open image path
-    image_width, image_height = original_image.size 
-    gray_image = Image.new("L", (image_width, image_height)) 
-
-    # Traverse pixels and apply luma formula
-    for y in range(image_height):
-        for x in range(image_width):
-            # Get RGB values
-            r, g, b = original_image.getpixel((x, y))
-            # Apply luma formula
-            luma_value = int(r * 299/1000 + g * 587/1000 + b * 114/1000)
-            # Set the grayscale pixel value
-            gray_image.putpixel((x, y), luma_value)
-
-    return gray_image
 
 
 # Apply Gaussian kernel tranversing over image
@@ -87,7 +42,7 @@ def gauss_bhai(image_path, kernel_size, sigma):
     if (len(imageog.split())) == 3:
         print("image is RGB")
         # convert 2 grey
-        gray_image = rgb_to_gray_luma(image_path)
+        gray_image = rgb_to_gray(image_path)
    
     elif (len(imageog.split())) == 1:
         print("image is greyscale")

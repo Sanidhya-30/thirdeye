@@ -1,15 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from ..utils import *
 
-# Read the input image
-image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jpg"
-image = cv2.imread(image_path, cv2.IMREAD_COLOR)
-
-# Check if the image is loaded successfully
-if image is None:
-    print("Error: Unable to load the image.")
-    exit()
 
 # Function to perform morphological operations on color image
 def perform_morphological_operations(image):
@@ -41,20 +34,21 @@ def perform_morphological_operations(image):
     output_gradient = cv2.merge((b_gradient, g_gradient, r_gradient))
 
     # Plot the results
-    plot_morphological_results(image, output_erosion, output_dilation, output_opening, output_closing, output_gradient)
+    plot_images(image, output_erosion, output_dilation, output_opening, output_closing, output_gradient)
 
-# Function to plot morphological operation results
-def plot_morphological_results(original, erosion, dilation, opening, closing, gradient):
-    plt.figure(figsize=(15, 5))
+def main():
+    # Read the input image
+    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jpg"
+    image = cv2.imread(image_path, cv2.IMREAD_COLOR)
 
-    plt.subplot(1, 6, 1), plt.imshow(original[:, :, ::-1]), plt.title('Original')
-    plt.subplot(1, 6, 2), plt.imshow(erosion[:, :, ::-1]), plt.title('Erosion')
-    plt.subplot(1, 6, 3), plt.imshow(dilation[:, :, ::-1]), plt.title('Dilation')
-    plt.subplot(1, 6, 4), plt.imshow(opening[:, :, ::-1]), plt.title('Opening')
-    plt.subplot(1, 6, 5), plt.imshow(closing[:, :, ::-1]), plt.title('Closing')
-    plt.subplot(1, 6, 6), plt.imshow(gradient[:, :, ::-1]), plt.title('Gradient')
+    # Check if the image is loaded successfully
+    if image is None:
+        print("Error: Unable to load the image.")
+        exit()  
 
-    plt.show()
+    # Perform morphological operations and plot the results
+    perform_morphological_operations(image)
 
-# Perform morphological operations and plot the results
-perform_morphological_operations(image)
+if __name__ == "__main__":
+    main()
+
