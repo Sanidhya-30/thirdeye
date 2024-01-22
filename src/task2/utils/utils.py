@@ -2,11 +2,19 @@ import sys
 import os
 import matplotlib.pyplot as plt
 from PIL import Image
+import cv2 
+
 
 ## ----- DEFINING CONSTANTS ------ ##
-pi = 3.14159265
-e = 2.71828
 
+cons_pi = 3.14159265
+cons_e = 2.71828
+baboon_path = "/home/ubuntu/thirdeye/src/task2/baboon.jpg"
+cat_grey = "/home/ubuntu/thirdeye/src/task2/cat_grey.jfif"
+cat_lowres = "/home/ubuntu/thirdeye/src/task2/cat_lowres.jpg"
+cat_highres = "/home/ubuntu/thirdeye/src/task2/cat.jpg"
+cat_medres = "/home/ubuntu/thirdeye/src/task2/cat.jpg"
+creepy = "/home/ubuntu/thirdeye/src/task2/creepy.jpg"
 
 
 ## ----- CONVERT IMAGE TO 3D ARRAY ------ ##
@@ -16,6 +24,8 @@ def image_to_3d_array(image):
     Convert a Pillow Image object to a 3D array.
 
     """
+    print("converting image to array")
+
     width, height = image.size
     array_3d = []
 
@@ -33,7 +43,7 @@ def image_to_3d_array(image):
 ## ----- FUNCTION TO CONVERT RGB TO HSV ------ ##
 
 def rgb_to_hsv(rgb_image):
-
+    print("converting rgb to hsv")
     rgb_array = image_to_3d_array(rgb_image)
     height, width, _ = len(rgb_array), len(rgb_array[0]), len(rgb_array[0][0])
     hsv_array = [[[0.0, 0.0, 0.0] for _ in range(width)] for _ in range(height)]
@@ -87,7 +97,7 @@ def rgb_to_hsv(rgb_image):
 ## ----- FUNCTION TO CONVERT HSV TO RGB ------ ##
 
 def hsv_to_rgb(hsv_image):
-
+    print("converting hsv to rgb")
     # Get the size of the image
     width, height = hsv_image.size
 
@@ -131,6 +141,7 @@ def hsv_to_rgb(hsv_image):
 ## ----- FUNCTION TO CONVERT RGB TO GREY ------ ##
 
 def rgb_to_gray(rgb_image):
+    print("converting rgb to gray")
     # Convert RGB to grayscale
     width, height = rgb_image.size
     gray_image = [[0 for _ in range(width)] for _ in range(height)]
@@ -153,6 +164,7 @@ def plot_images(*images):
     Plot multiple images in a single figure.
 
     """
+    print("plotting")
     num_images = len(images)
     rows = 1
     cols = num_images

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import pywt
-from ..utils import *
+from .utils import *
 
 # Normal methods
 def digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_NEAREST):

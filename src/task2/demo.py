@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from utils.utils import *
 
 def apply_mask(image, mask):
     # Ensure mask has the same number of channels as the image
@@ -30,7 +31,7 @@ def automatic_brightness_control(image, block_size=10, threshold=20, target_brig
     return brightened_image  # Ensure data type is uint8
 
 # Example usage:
-image = cv2.imread("C:/Users/sanid/OneDrive/Desktop/3rdiTech/task2/demo.jfif", cv2.IMREAD_GRAYSCALE)
+image = cv2.imread(cat_highres, cv2.IMREAD_GRAYSCALE)
 # image = cv2.resize(image, (512,512))
 if image is not None:
     adjusted_image = automatic_brightness_control(image)

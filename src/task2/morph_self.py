@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from PIL import Image
-from ..utils import *
+from utils.utils import *
 
 def erosion(image, se):
     # Perform erosion on the input image
@@ -29,7 +29,7 @@ def dilation(image):
 def morphological_opening(image, se):
     # Perform morphological opening (erosion followed by dilation)
     eroded_image = erosion(image, se)
-    opened_image = dilation(eroded_image, se)
+    opened_image = dilation(eroded_image)
     return opened_image
 
 def morphological_closing(image, se):
@@ -40,8 +40,8 @@ def morphological_closing(image, se):
 
 
 def main():
-        # Read the image and convert it to grayscale
-    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jfif"
+    # Read the image and convert it to grayscale
+    image_path = cat_medres
     rgb_image = Image.open(image_path).convert('RGB')
     gray_image = rgb_to_gray(rgb_image)
 

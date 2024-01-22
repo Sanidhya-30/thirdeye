@@ -1,12 +1,11 @@
 from PIL import Image
 import time
 import cv2
-from ..utils import *
-
+from utils.utils import *
 
 ##Generate a 2D Gaussian kernel.
 def gaussian_kernel(size, sigma=1.0):
-    kernel = [[(1/(2 * pi * sigma**2)) * e**(-((x - (size-1)/2)**2 + (y - (size-1)/2)**2) / (2 * sigma**2))
+    kernel = [[(1/(2 * cons_pi * sigma**2)) * cons_pi**(-((x - (size-1)/2)**2 + (y - (size-1)/2)**2) / (2 * sigma**2))
                for x in range(size)] for y in range(size)]
     normalization = sum(sum(row) for row in kernel)
     return [[value / normalization for value in row] for row in kernel]
@@ -16,7 +15,7 @@ def gaussian_kernel(size, sigma=1.0):
 def apply_gaussian_smoothing(image, kernel_size=9, sigma=1.5):
     """
     Apply Gaussian smoothing to the image.
-    
+
     """
     kernel = gaussian_kernel(kernel_size, sigma)
     image_width, image_height = len(image[0]), len(image)
@@ -70,8 +69,8 @@ def main():
     kernel_size = 5  # Choose an odd number
     sigma = 1.5
 
-    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//baboon.jpg"
-    imageog = Image.open(image_path)
+    image_path = baboon_path
+    imageog = Image.open(baboon_path)
 
     # apna gauss
     image1, timet = gauss_bhai(image_path, kernel_size, sigma)

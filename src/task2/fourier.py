@@ -1,5 +1,6 @@
 from PIL import Image
 import math
+from utils.utils import *
 
 def fourier_transform(image):
     width, height = image.size
@@ -58,7 +59,7 @@ def remove_high_frequency(real_part, imag_part, threshold):
 
 def main():
     # Load image
-    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat_lowres.jpg"
+    image_path = cat_lowres
     original_image = Image.open(image_path).convert("L")
 
     # Fourier Transform

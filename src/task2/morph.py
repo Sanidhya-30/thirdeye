@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from ..utils import *
+from utils.utils import *
 
 
 # Function to perform morphological operations on color image
@@ -38,7 +38,7 @@ def perform_morphological_operations(image):
 
 def main():
     # Read the input image
-    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jpg"
+    image_path = cat_highres
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
 
     # Check if the image is loaded successfully

@@ -1,7 +1,7 @@
 from PIL import Image
 import math
 import cv2
-from ..utils import *
+from utils.utils import *
 
 
 ## ----- CLASSIFY CONTRAST ------ ##
@@ -89,7 +89,7 @@ def adap_imen(image, threshold=3):
 
 def main():
     # Load image
-    image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jfif"
+    image_path = cat_medres
     original_image = Image.open(image_path)
     adimen_image = adap_imen(original_image)
     

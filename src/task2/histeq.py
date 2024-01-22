@@ -1,8 +1,9 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+from utils.utils import *
 
-image = cv2.imread('C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//demo.jpg', cv2.IMREAD_GRAYSCALE)
+image = cv2.imread(cat_highres, cv2.IMREAD_GRAYSCALE)
 
 if image is not None:
 

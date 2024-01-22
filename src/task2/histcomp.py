@@ -1,5 +1,5 @@
 import cv2
-from ..utils import *
+from utils.utils import *
 
 
 def local_histogram_equalization(image, kernel_size=(3, 3)):
@@ -28,7 +28,7 @@ def contrast_limited_adaptive_histogram_equalization(image, clip_limit=2.0, grid
 
 def main():
     # Example usage:
-    image_path = 'C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jfif'
+    image_path = cat_medres
     original_image = Image.open(image_path)
 
     # Apply image processing methods
