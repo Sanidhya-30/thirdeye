@@ -1,6 +1,7 @@
 from PIL import Image
 import cv2
 import matplotlib.pyplot as plt
+from utils.utils import *
 
 def image_to_3d_array(image):
     return [list(pixel) for pixel in image.getdata()]
@@ -27,17 +28,32 @@ def plot_images(*images):
 
     plt.show()
 
+def Plot_Figure(images_with_titles, rows, cols):
+
+    num_images = len(images_with_titles)
+
+    # Create a new figure
+    fig = plt.figure(figsize=(4 * cols, 4 * rows))
+
+    for i in range(1, num_images+1):
+        fig.add_subplot(rows, cols, i)
+        plt.imshow(images_with_titles[i-1][0])
+        plt.axis('off')  # Turn off axis labels
+        plt.title(images_with_titles[i-1][1])
+
+    plt.show()
+
 def conversion(image):
     width, height = image.size
 
     if image.mode == "RGB" :
         hsv_image = Image.new('HSV', (width, height))
-        print("converting hsv to rgb")
+        print("converting rgb to hsv")
         # Iterate over each pixel in the HSV image
         for y in range(height):
             for x in range(width):
                 r, g, b = image.getpixel((x, y))
-                h,s,v = rgb_to_hsv(r,g,b)
+                h,s,v = rgb2hsv(r,g,b)
                 hsv_image.putpixel((x,y),(int(h),int(s),int(v)))
 
         return hsv_image
@@ -51,13 +67,13 @@ def conversion(image):
         for y in range(height):
             for x in range(width):
                 h, s, v = image.getpixel((x, y))
-                r ,g ,b = hsv_to_rgb(h,s,v)
+                r ,g ,b = hsv2rgb(h,s,v)
                 rgb_image.putpixel((x,y),(r,g,b))
 
         return rgb_image
 
 
-def hsv_to_rgb(h, s, v):
+def hsv2rgb(h, s, v):
     """
     Convert HSV (Hue, Saturation, Value) to RGB (Red, Green, Blue).
 
@@ -92,7 +108,7 @@ def hsv_to_rgb(h, s, v):
         return int(255 * v), int(255 * p), int(255 * q)
 
 
-def rgb_to_hsv(r, g, b): 
+def rgb2hsv(r, g, b): 
     r, g, b = r / 255.0, g / 255.0, b / 255.0
   
     cmax = max(r, g, b)    # maximum of r, g, b 
@@ -127,17 +143,33 @@ def rgb_to_hsv(r, g, b):
 
 
 # Example usage:
-image_path = "C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//cat.jfif"
-input_image_rgb = Image.open(image_path)
-print(input_image_rgb.mode)
+# image_path = cat_medres
+# im_og = cv2.imread(cat_medres)
+# im_og = cv2.cvtColor(im_og, cv2.COLOR_BGR2RGB)
+# input_image_rgb = Image.open(image_path)
 
-# Convert RGB to HSV using the function
-output_image_hsv = conversion(input_image_rgb)
-print(output_image_hsv.mode)
-output_image_rgb = conversion(output_image_hsv)
+# # Convert RGB to HSV using the function
+# im_hsv = cv2.cvtColor(im_og, cv2.COLOR_BGR2HSV)
+# print(input_image_rgb.mode)
+# output_image_hsv = conversion(input_image_rgb)
 
-im = cv2.imread(image_path)
-hsv_img = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
+# im_rgb = cv2.cvtColor(im_hsv, cv2.COLOR_BGR2HSV)
+# output_image_rgb = conversion(output_image_hsv)
 
-plot_images(input_image_rgb, output_image_hsv, output_image_rgb)   
+# print(output_image_hsv.mode)
+# hsv_img = cv2.cvtColor(im_rgb, cv2.COLOR_BGR2HSV)
 
+# plot_images(im_og, input_image_rgb,im_hsv, output_image_hsv,im_rgb, output_image_rgb)   
+
+image1 = plt.imread(cat_lowres)
+image2 = plt.imread(cat_medres)
+image3 = plt.imread(cat_highres)
+image4 = plt.imread(baboon_path)
+
+title1 = "Title 1"
+title2 = "Title 2"
+title3 = "Title 3"
+title4 = "Title 4"
+
+images_with_titles = [(image1, "lmao"), (image2, title2), (image3, title3), (image4, title4)]
+Plot_Figure(images_with_titles, rows=1, cols=4)

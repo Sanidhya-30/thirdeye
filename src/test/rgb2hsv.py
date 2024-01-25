@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from PIL import Image
 import cv2
+from mpl_toolkits.mplot3d import Axes3D
+
 
 
 def image_to_3d_array(image):
@@ -9,18 +11,8 @@ def image_to_3d_array(image):
 
     """
     print("converting image to array")
+    return [[[pixel for pixel in row] for row in image.getdata()]]
 
-    width, height = image.size
-    array_3d = []
-
-    for y in range(height):
-        row = []
-        for x in range(width):
-            pixel = image.getpixel((x, y))
-            row.append(pixel)
-        array_3d.append(row)
-
-    return array_3d
 
 
 def plot_images(*images):
@@ -47,64 +39,52 @@ def plot_images(*images):
     plt.show()
 
 
-def rgb2hsv(rgb_image):
+
+def rgb2hsv(pixel): 
+    r, g, b = pixel[0] / 255.0, pixel[1] / 255.0, pixel[2] / 255.0
+    cmax, cmin = max(r, g, b), min(r, g, b)
+    delta = cmax - cmin
+
+    # Calculate hue
+    if delta == 0:
+        h = 0
+    elif cmax == r:
+        h = 60 * ((g - b) / delta % 6)
+    elif cmax == g:
+        h = 60 * ((b - r) / delta + 2)
+    elif cmax == b:
+        h = 60 * ((r - g) / delta + 4)
+
+    # Calculate saturation
+    s = 0 if cmax == 0 else delta / cmax
+
+    # Calculate value
+    v = cmax
+
+    return int(h), int(s * 100), int(v * 100)
+
+
+
+def rgb_to_hsv(rgb_image, width, height):
     print("converting rgb to hsv")
-    rgb_array = image_to_3d_array(rgb_image)
-    height, width, _ = len(rgb_array), len(rgb_array[0]), len(rgb_array[0][0])
-    hsv_array = [[[0.0, 0.0, 0.0] for _ in range(width)] for _ in range(height)]
-
-    for y in range(height):
-        for x in range(width):
-            r, g, b = rgb_array[y][x]
-
-            # Normalize RGB values to the range [0, 1]
-            r, g, b = r / 255.0, g / 255.0, b / 255.0
-
-            # h, s, v = hue, saturation, value 
-            cmax = max(r, g, b)    # maximum of r, g, b 
-            cmin = min(r, g, b)    # minimum of r, g, b 
-            diff = cmax-cmin       # diff of cmax and cmin. 
-        
-            # if cmax and cmax are equal then h = 0 
-            if cmax == cmin:  
-                h = 0
-            
-            # if cmax equal r then compute h 
-            elif cmax == r:  
-                h = (60 * ((g - b) / diff) + 360) % 360
-        
-            # if cmax equal g then compute h 
-            elif cmax == g: 
-                h = (60 * ((b - r) / diff) + 120) % 360
-        
-            # if cmax equal b then compute h 
-            elif cmax == b: 
-                h = (60 * ((r - g) / diff) + 240) % 360
-        
-            # if cmax equal zero 
-            if cmax == 0: 
-                s = 0
-            else: 
-                s = (diff / cmax) * 100
-        
-            # compute v 
-            v = cmax * 100
-
-            hsv_array[y][x] = [h, s, v]
-
-    print(len(hsv_array[0][0]))
-    hsv_image = Image.new("HSV", rgb_image.size)
-    hsv_image.putdata([(int(pixel[0] * 360), int(pixel[1] * 255), int(pixel[2] * 255)) for row in hsv_array for pixel in row])
-    
+    hsv_image = Image.new("HSV", (width, height))
+    for x in range(width):
+        for y in range(height):
+            pixel_rgb = rgb_image.getpixel((x, y))
+            pixel_hsv = rgb2hsv(pixel_rgb)
+            hsv_image.putpixel((x, y), pixel_hsv)
     return hsv_image
+
 
 def main():
     # Load image
-    image_path = "/home/ubuntu/thirdeye/src/task2/cat_lowres.jpg"
+    image_path = "/home/ubuntu/thirdeye/src/task2/baboon.jpg"
     rgb_image = Image.open(image_path)
-    hsv_image = rgb2hsv(rgb_image)
+    print(rgb_image.size)
+    width, height = rgb_image.size
+    hsv_image = rgb_to_hsv(rgb_image, width, height)
+    hsv_image.show()
     
-    plot_images(rgb_image, hsv_image)   
 
 if __name__ == "__main__":
     main()

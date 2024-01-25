@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import pywt
-from .utils import *
+from utils.utils import *
 
 # Normal methods
 def digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_NEAREST):
@@ -26,9 +26,12 @@ def wavelet_zoom(image, wavelet_basis='db4', decomposition_level=2, zoom_factor=
 
     # DWT --> interpolate --> IDWT
     coeffs = pywt.wavedec2(image, wavelet=wavelet_basis, level=decomposition_level)
+    print (coeffs)
+    coeffs = np.array(coeffs)
+    coeff_im = cv2.imread(image, 0)
     resized_coeffs = []
     for c in coeffs:
-        resized_c = cv2.resize(c, None, fx=zoom_factor, fy=zoom_factor, interpolation=cv2.INTER_CUBIC)
+        resized_c = cv2.resize(coeff_im, None, fx=zoom_factor, fy=zoom_factor, interpolation=cv2.INTER_CUBIC)
         resized_coeffs.append(resized_c)
     zoomed_image = pywt.waverec2(resized_coeffs, wavelet=wavelet_basis)
     
@@ -54,8 +57,8 @@ def lanczos_zoom(image, zoom_factor, lanczos_window=3):
     dft_shift = np.fft.fftshift(dft)
     rows, cols = image.shape
     crow, ccol = rows // 2, cols // 2
-    mask = np.zeros((rows, cols, 2), np.uint8)
-    mask[crow-zoom_factor*crow:crow+zoom_factor*crow, ccol-zoom_factor*ccol:ccol+zoom_factor*ccol] = 1
+    # mask = np.zeros((rows, cols, 2), np.uint8)
+    # mask[int(crow-zoom_factor*crow:crow+zoom_factor*crow), int(ccol-zoom_factor*ccol:ccol+zoom_factor*ccol)] = 1
     fshift = dft_shift * lanczos(np.linspace(-0.5, 0.5, cols)[np.newaxis]) * lanczos(np.linspace(-0.5, 0.5, rows)[:, np.newaxis])
     ishift = np.fft.ifftshift(fshift)
     idft = cv2.idft(ishift)
@@ -63,27 +66,30 @@ def lanczos_zoom(image, zoom_factor, lanczos_window=3):
     return zoomed_image
 
 # Edge Directed
-def edge_directed_zoom(image, zoom_factor, edge_detector=cv2.Canny, interpolation_method=cv2.INTER_LINEAR):
+def edge_directed_zoom(image, zoom_factor, interpolation_method=cv2.INTER_LINEAR):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    edges = edge_detector(image)
+    edges = cv2.Canny(image, 50, 150) 
     weights = cv2.distanceTransform(edges, distanceType=cv2.DIST_L2, maskSize=5)
-    zoomed_image = cv2.resize(image, None, fx=zoom_factor, fy=zoom_factor, interpolation=interpolation_method, dst=cv2.ximgproc.createEdgeAwareInterpolator())
+    zoomed_image = cv2.resize(image, None, fx=zoom_factor, fy=zoom_factor, interpolation=interpolation_method)
+    z = cv2.resize(image, None, fx = zoom_factor, fy=zoom_factor, interpolation = interpolation_method)
     return zoomed_image
 
 
 ## Main Code 
-image = cv2.imread("C://Users//sanid//OneDrive//Desktop//3rdiTech//task2//test.jpg") # Load an image
-zoom_factor = 10.0  # Adjust Zoom Factor as needed
+image = cv2.imread(creepy) # Load an image
+zoom_factor = 3.0  # Adjust Zoom Factor as needed
 
 nearest_zoomed = digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_NEAREST)
 bilinear_zoomed = digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_LINEAR)
 bicubic_zoomed = digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_CUBIC)
-# lanczos_zoomed = lanczos_zoom(image_gray, zoom_factor)
-wavelet_zoomed = wavelet_zoom(image, zoom_factor)
+lanczos_zoomed = digital_zoom(image, zoom_factor, interpolation_method=cv2.INTER_LANCZOS4)
+# wavelet_zoomed = wavelet_zoom(image, wavelet_basis='db4', decomposition_level=2, zoom_factor=2)
 edge_directed_zoomed = edge_directed_zoom(image, zoom_factor)
 
 # Display the combined images
-plot_images(image, nearest_zoomed, bilinear_zoomed, bicubic_zoomed, wavelet_zoomed, edge_directed_zoomed)
+# im_arr = [(image, "input"), (nearest_zoomed, "nearest naighbour"), (bilinear_zoomed, "Bilinear"), (bicubic_zoomed, "Bicubic"), (wavelet_zoomed, "Wavelet"),(edge_directed_zoomed, "edge directed")]
+# Plot_Figure(im_arr, rows=2, cols=3)
+plot_images(image, nearest_zoomed, bilinear_zoomed, bicubic_zoomed, lanczos_zoomed)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

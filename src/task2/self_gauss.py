@@ -82,8 +82,9 @@ def main():
     time2=time.time()
     timeT = time2-time1
     print("Time for cv Gauss", timeT)
-    plot_images(imageog, image1, image2)
-
+    # plot_images(imageog,image1, image2)
+    im_arr = [(imageog, "input"), (image2, "CV Output"), (image1, "Our Output")]
+    Plot_Figure(im_arr, rows=1, cols=3)
 
 if __name__ == "__main__":
     main()
