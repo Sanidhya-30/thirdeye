@@ -14,7 +14,8 @@ cat_grey = "/home/ubuntu/thirdeye/src/task2/cat_grey.jfif"
 cat_lowres = "/home/ubuntu/thirdeye/src/task2/cat_lowres.jpg"
 cat_highres = "/home/ubuntu/thirdeye/src/task2/cat.jpg"
 cat_medres = "/home/ubuntu/thirdeye/src/task2/cat.jfif"
-creepy = "/home/ubuntu/thirdeye/src/task2/creepy.jpg"
+creepy_path = "/home/ubuntu/thirdeye/src/task2/creepy.jpg"
+lena_path = "/home/ubuntu/thirdeye/src/task2/lena.jpeg"
 
 ## ---------------------------------------------------- ##
 
