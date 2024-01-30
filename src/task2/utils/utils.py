@@ -198,6 +198,32 @@ def Plot_Figure(images_with_titles, rows, cols):
 
     plt.show()
 
+def Plot_Image_and_Histogram(image_array):
+    num_images = len(image_array)
+
+    # Create a new figure with subplots
+    fig, axs = plt.subplots(num_images, 2, figsize=(10, 5*num_images))
+
+    for i in range(num_images):
+        image = image_array[i][0]
+        title = image_array[i][1]
+
+        # Plot the image on the left subplot
+        axs[i, 0].imshow(image)
+        axs[i, 0].axis('off')  # Turn off axis labels
+        axs[i, 0].set_title(f'Image - {title}')
+
+        # Plot the histogram on the right subplot
+        if len(image.shape) == 3:
+            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        else:
+            gray_image = image
+        hist = cv2.calcHist([gray_image], [0], None, [256], [0, 256])
+        axs[i, 1].plot(hist)
+        axs[i, 1].set_title(f'Histogram - {title}')
+
+    plt.show()
+    
 
 def keyboard_shutdown():
     print('Interrupted\n')

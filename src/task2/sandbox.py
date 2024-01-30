@@ -1,59 +1,34 @@
-import matplotlib.pyplot as plt
 import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from utils.utils import *
+from matplotlib.widgets import Slider, Button
 
-baboon_path = "/home/ubuntu/thirdeye/src/task2/baboon.jpg"
-cat_grey = "/home/ubuntu/thirdeye/src/task2/cat_grey.jfif"
+def apply_gaco(image, gamma):
 
-def Plot_Figure(images_with_titles, rows, cols):
+    v_channel = image[:, :, 2] / 255.0
+    v_corrected = (np.power(v_channel, gamma) * 255).astype(np.uint8)
+    image[:, :, 2] = v_corrected
+    corrected_image_rgb = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
 
-    num_images = len(images_with_titles)
-
-    # Create a new figure
-    fig = plt.figure(figsize=(4 * cols, 4 * rows))
-
-    for i in range(1, num_images+1):
-        fig.add_subplot(rows, cols, i)
-        plt.imshow(images_with_titles[i-1][0])
-        plt.axis('off')  # Turn off axis labels
-        plt.title(images_with_titles[i-1][1])
-
-    plt.show()
-
-
-def Plot_Histograms(image_array, rows, cols):
-    num_images = len(image_array)
-
-    # Create a new figure
-    fig = plt.figure(figsize=(4 * cols, 4 * rows))
-
-    for i in range(1, num_images + 1):
-        img = image_array[i - 1][0]
-        title = image_array[i - 1][1]
-
-        # Convert image to grayscale
-        if len(img.shape) == 3:
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        # Calculate histogram
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
-
-        # Plot histogram
-        fig.add_subplot(rows, cols, i)
-        plt.plot(hist)
-        plt.title(f'Histogram - {title}')
-
-    plt.show()
+    return corrected_image_rgb
 
 def main():
-    image1 = cv2.imread(baboon_path)
-    image2 = cv2.imread(cat_grey)
-    image_array = [(image1, "Input"), (image2, "Output")]
+    global width, height
 
-    # Plotting images
-    Plot_Figure(image_array, rows=2, cols=1)
+    # Load image
+    image_path = lena_path
+    ogimage = cv2.imread(image_path)
+    height, width, depth = ogimage.shape
 
-    # Plotting histograms
-    Plot_Histograms(image_array, rows=2, cols=1)
+    rgbimage = cv2.cvtColor(ogimage, cv2.COLOR_BGR2RGB)
+    hsvimage = cv2.cvtColor(ogimage, cv2.COLOR_BGR2HSV)
 
-if __name__ == '__main__':
+    gamma = 0.5
+    oimage = apply_gaco(hsvimage.copy(), gamma)  # Copy to avoid modifying the original image in-place
+
+    image_array = [(rgbimage, "Input"), (oimage, "Output")]
+    Plot_Image_and_Histogram(image_array)
+
+if __name__ == "__main__":
     main()

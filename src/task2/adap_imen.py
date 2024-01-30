@@ -96,7 +96,7 @@ def adap_imen(image_path, threshold=3):
 
 def main():
     # Load image
-    image_path = cat_highres
+    image_path = lena_path
     ogimage = Image.open(image_path)
 
     adimen_image = adap_imen(image_path)
